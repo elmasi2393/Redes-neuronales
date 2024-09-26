@@ -69,8 +69,8 @@
 \pagestyle{fancy}
 
 % Definimos el encabezado de las paginas pares e impares.
-\lhead{IMÁGENES MÉDICAS}
-\chead{Práctica 4 - 2024}
+\lhead{REDES NEURONALES}
+\chead{Práctica 2 - 2024}
 \rhead{Gatto Maximiliano}
 \renewcommand{\headrulewidth}{0.5pt}
 
@@ -99,7 +99,7 @@
 
 % ------------------ INTRODUCCION ---------------------
 \section{Introducción}
-En esta práctica se analiza la dinámica de sistemas acoplados correspondiente a neuronas. Especialmente el ejercicio 1 se implementó de manera numérica en un script de \texttt{Python}, cuyo código se encuentra disponible en el siguiente \href{}{enlace}.
+En esta práctica se analiza la dinámica de sistemas acoplados correspondiente a neuronas. Especialmente el ejercicio 1 se implementó de manera numérica en un script de \texttt{Python}, cuyo código se encuentra disponible en el siguiente \href{https://github.com/elmasi2393/Redes-neuronales}{enlace}.
 
 
 % ------------------ RESULTADOS ---------------------
@@ -132,7 +132,7 @@ Para un valor de \(g_\text{syn} =\) \SI{0.45}{\milli\siemens\per \centi\meter\sq
 \begin{figure} [htbp]
     \centering
     \includegraphics[width=0.45\textwidth]{figuras/barrido_nsyn.pdf}
-    \caption{desfasaje y tasa de disparo en función de \(g_\text{syn}\) para el caso excitatorio y inhibitorio.}
+    \caption{desfasaje y tasa de disparo en función de \(g_\text{syn}\) para el caso (a) excitatorio y (b) inhibitorio.}
     \label{fig:ej1_barrido}
 \end{figure}
 
@@ -149,7 +149,7 @@ Se considera un modelo de dos poblaciones de neuronas descritas por un modelo de
 
 \noindent donde \(f_a = S(h_a)\) (\(a = e, i\)) con \(S(x) = x \Theta(x)\), siendo \(\Theta\) la función de Heaviside. 
 
-Notar que si \(h_i < 0\) y \(h_e < 0\) entonces el sistema se desacopla por lo que no hay cambio de actividad. Luego si \(h_i < 0\) pero \(h_e > 0\), o viceversa, el sistema evoluciona incrementando la actividad de la variable negativa hasta llegar a un valor positivo. Por lo tanto para que el sistema pueda ser estable se analizan los casos en que \(h_i > 0\) y \(h_e > 0\). De este modo, el sistema resultado
+Notar que si \(h_i < 0\) y \(h_e < 0\) entonces el sistema se desacopla por lo que no hay cambio de actividad. Luego si \(h_i < 0\) pero \(h_e > 0\), o viceversa, una de las variables queda desacoplada y la restante se acopla con la anterior. Esto puede tener soluciones estables, pero la variable desacoplada tiene su propia dinámica, sin tener en cuenta le evolución de la variable restante. El sistema se acopla completamente cuando \(h_i > 0\) y \(h_e > 0\). De este modo, el sistema resulta
 
 \begin{eqnarray*}
     \tau \partial_t h_e  &=& -h_e + g_{ee} h_e - g_{ei} h_i + I_e, \\
@@ -163,18 +163,52 @@ Notar que si \(h_i < 0\) y \(h_e < 0\) entonces el sistema se desacopla por lo q
     0  &=& g(h_e, h_i) = -h_i + g_{ie} h_e - g_{ii} h_i + I_i.
 \end{eqnarray*}
 
-Notar que las neuclinas son rectas en el espacio \((h_e, h_i)\) y se intersectan si las pendientes no son iguales. Se analiza el caso en que las pendientes no son iguales y se analiza como cambian las neuclinas frente a una perturbación en torno a un punto de estabilidad. 
-
-Si se linealiza la perturbación \(\overline{\epsilon} = (\delta h_e, \delta h_i)\) en torno a un punto de estabilidad \((h_e^*, h_i^*)\) y se escribe de manera matricial, se obtiene que 
+Notar que las neuclinas son rectas en el espacio \((h_e, h_i)\) y se intersectan si las pendientes no son iguales. Además, como se analiza el caso en que \(h_e >0\) y \(h_i>0\), se tiene como condición que el punto fijo \(\overline{h^*} = (h_e^*, h_i^*)\) se encuentra en el primer cuadrante. El sistema resultante se expresa como 
 
 \begin{equation*}
-    \frac{\partial \overline{\epsilon}}{\partial t} = \mathbf{A} \overline{\epsilon},
+    \overline{I} = \mathbf{A} \cdot \overline{h^*},
+\end{equation*}
+
+
+\noindent donde \(\overline{I} = (I_e, I_i)\) y \(\mathbf{A}\) es la matriz de coeficientes del sistema, es decir 
+
+\begin{equation*}
+    \overline{\mathbf{A}} = \begin{pmatrix}
+        1 - g_{ee} & g_{ei} \\
+        -g_{ie} & 1 + g_{ii}
+    \end{pmatrix}.
+\end{equation*}
+
+Luego, el punto fijo del sistema está dado por 
+
+\begin{eqnarray*}
+    \overline{h^*} &=& \overline{\mathbf{A}}^{-1} \overline{I} \\
+    &=& \frac{1}{det(\mathbf{A})} \begin{pmatrix} 
+        1 + g_{ii} & -g_{ei} \\
+        g_{ie} & 1 - g_{ee}
+    \end{pmatrix} \begin{pmatrix}
+        I_e \\ I_i
+    \end{pmatrix}.
+\end{eqnarray*}
+
+De esta ecuación, se pueden determinar 2 condiciones para los coeficientes
+
+\begin{eqnarray}
+    (1 + g_{ii}) I_e - g_{ei} I_i &>& 0, \label{eq:cond_1} \\ 
+    g_{ei} I_e + (1-g_{ee})I_i&>& 0, \label{eq:cond_2}
+\end{eqnarray}
+
+
+Luego, se puede analizar la estabilidad del sistema. Si se linealiza la perturbación \(\overline{\epsilon} = (\delta h_e, \delta h_i)\) en torno a al punto de estabilidad \((h_e^*, h_i^*)\) y se escribe de manera matricial, se obtiene que 
+
+\begin{equation*}
+    \frac{\partial \overline{\epsilon}}{\partial t} = \mathbf{E} \cdot \overline{\epsilon},
 \end{equation*}
 
 \noindent donde 
 
 \begin{equation*}
-    \mathbf{A} = \begin{pmatrix}
+    \mathbf{E} = \begin{pmatrix}
         \partial_{h_e} f(h_e, h_i) & \partial_{h_i} f(h_e, h_i) \\
         \partial_{h_e} g(h_e, h_i) & \partial_{h_i}g(h_e, h_i)
     \end{pmatrix}.
@@ -184,25 +218,20 @@ Por lo tanto, se convierte en un problema de autovalores, en donde para que sea 
 
 Particularizando para el sistema dado, se tiene que
 
-\begin{equation}
-    \mathbf{A} = \begin{pmatrix}
+\begin{equation*}
+    \mathbf{E} = \begin{pmatrix}
         g_{ee} - 1 & -g_{ei} \\
         g_{ie} & -g_{ii} - 1
     \end{pmatrix},
-\end{equation}
-
-además, se tiene que \( T = g_{ee} - g_{ii} -2\) y \(D = 1 -g_{ee} - g_{ee}g_{ii} + g_{ii} + g_{ie}g_{ei}\). Imponiendo la condición \(T < 0\) se tiene que
-
-\begin{equation*}
-    g_{ee} - g_{ii} < 2,
 \end{equation*}
-\noindent y para que sea estable se requiere que \(D > 0\), por lo que se tiene que
 
-\begin{eqnarray*}
-    1 - g_{ee} - g_{ee}g_{ii} + g_{ii} + g_{ie}g_{ei} &>& 0, \\
-    g_{ee} - g_{ii} < 1 - g_{ee}g_{ii} + g_{ie}g_{ei} &<& 2\\,
-\end{eqnarray*}
+además, se tiene que \( T = g_{ee} - g_{ii} -2\) y \(D = 1 -g_{ee} - g_{ee}g_{ii} + g_{ii} + g_{ie}g_{ei}\). Por lo tanto, imponiendo las condiciones de estabilidad se tiene que
 
-\noindent de esta ultima se obtiene \(g_{ie} g_{ei} - g_{ee}g_{ii} < 1\). 
+\begin{eqnarray}
+    g_{ee} - g_{ii} &>& 2, \label{eq:cond_3}\\
+    1 -g_{ee} - g_{ee}g_{ii} + g_{ii} + g_{ie}g_{ei} &>& 0 \label{eq:cond_4}.
+\end{eqnarray}
+
+Por lo tanto, se tiene que las ecuaciones \ref{eq:cond_1}, \ref{eq:cond_2}, \ref{eq:cond_3} y \ref{eq:cond_4} son las condiciones necesarias y suficientes para que el sistema sea estable.
 
 \end{document}

@@ -101,7 +101,7 @@
 \section{Introducción}
 % En esta práctica se analiza la dinámica de sistemas acoplados correspondiente a neuronas. Especialmente el ejercicio 1 se implementó de manera numérica en un script de \texttt{Python}, cuyo código se encuentra disponible en el siguiente \href{https://github.com/elmasi2393/Redes-neuronales}{enlace}.
 
-En esta práctica se analiza la estadística de trenes de spike mediante datos de estímulo y respuesta medidos experimentalmente por Ariel Roken utilizando electrodos intracelulares en un saltamontes. Se proporcionaron 128 realizaciones de un estímulo sonoro durante \SI{1000}{\milli\second} dividido en ventanas de \SI{0.1}{\milli\second}, en donde se registró un 1 cuando se midió un spike y 0 en caso contrario. Los ejercicios se implementaron utilizando un script de \texttt{Python}, cuyo código se encuentra disponible en el siguiente \href{
+En esta práctica se analiza la estadística de trenes de spike mediante datos de estímulo y respuesta medidos experimentalmente por Ariel Rokem utilizando electrodos intracelulares en un saltamontes. Se proporcionaron 128 realizaciones de un estímulo sonoro durante \SI{1000}{\milli\second} dividido en ventanas de \SI{0.1}{\milli\second}, en donde se registró un 1 cuando se midió un spike y 0 en caso contrario. Los ejercicios se implementaron utilizando un script de \texttt{Python}, cuyo código se encuentra disponible en el siguiente \href{https://github.com/elmasi2393/Redes-neuronales/tree/main}{enlace}.
 
 
 % ------------------ RESULTADOS ---------------------
@@ -109,16 +109,10 @@ En esta práctica se analiza la estadística de trenes de spike mediante datos d
 
 % --------------- INCISO 1 ---------------------
 \subsection*{Ejercicio 1}
-En este inciso, se generó un histograma de los intervalos de los trenes de spike que se aproxime a la distribución de probabilidad \(P(\text{ISI})\) (\textit{inter-spike interval}) a partir de datos experimentales medidos con electrodos intracelulares en un saltamontes. En la Figura \ref{fig:estimulo_spikes} se puede observar el estímulo sonoro enviado al saltamontes, junto con los spikes medidos por los electrodos en un intervalo de \SI{1}{\milli\second}
+% En este inciso, se generó un histograma de los intervalos de los trenes de spike que se aproxime a la distribución de probabilidad \(P(\text{ISI})\) (\textit{inter-spike interval}) a partir de datos experimentales medidos con electrodos intracelulares en un saltamontes. En la Figura \ref{fig:estimulo_spikes} se puede observar el estímulo sonoro enviado al saltamontes, junto con los spikes medidos por los electrodos en un intervalo de \SI{1}{\milli\second}
 
-% \begin{figure} [htbp]
-%     % Usa subfloat para incluir los estimulos y el spike
-%     \centering
-%     \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/stimulus.pdf}}\\
-%     \subfloat[]{\includegraphics[width=0.45\textwidth]{figures/spikes.pdf}}
-%     \caption{(a) estímulo sonoro enviado al saltamontes y (b) spikes medidos por los electrodos en un intervalo de \SI{1}{\milli\second} para cada realización. }
-%     \label{fig:estimulo_spikes}
-% \end{figure}
+Se generó un histograma de los intervalos entre spikes que aproxima la distribución \(P(\text{ISI})\), basado en datos medidos con electrodos intracelulares en un saltamontes. La Figura \ref{fig:estimulo_spikes} muestra el estímulo sonoro y los spikes registrados en intervalos de \SI{0.1}{\milli\second}.
+
 
 \begin{figure} [htbp]
     \centering
@@ -137,22 +131,28 @@ Para calcular el histograma de los intervalos de los trenes de spike, se conside
     \label{fig:histogram_ISI}
 \end{figure}
 
-Además, se calculo el coeficiente de variabilidad, definido como \(CV = \frac{\sigma_\text{ISI}}{\langle \text{ISI} \rangle}\), donde \(\sigma_\text{ISI}\) es la desviación estándar y \(\langle \text{ISI} \rangle\) es el valor medio de los intervalos de los trenes de spike. Se obtuvo un valor de \(CV = 0.6573\).
+% Además, se calculo el coeficiente de variabilidad, definido como \(CV = \frac{\sigma_\text{ISI}}{\langle \text{ISI} \rangle}\), donde \(\sigma_\text{ISI}\) es la desviación estándar y \(\langle \text{ISI} \rangle\) es el valor medio de los intervalos de los trenes de spike. Se obtuvo un valor de \(CV = 0.6573\).
+
+Se calculó el coeficiente de variabilidad, definido como \(CV = \frac{\sigma_\text{ISI}}{\langle \text{ISI} \rangle}\), obteniéndose \(CV = 0.6573\).
 
 \subsection*{Ejercicio 2}
-En este ejercicio, se obtuvo un histograma que aproxima la probabilidad de obtener N spikes en una realización. Para ello, en cada una de las 128 realizaciones se contaron los spikes medidos y se generó el histograma, cuyo resultado se muestra en la Figura \ref{fig:histogram_Nspikes}.
+Se obtuvo un histograma que aproxima la probabilidad de obtener N spikes en una realización. Para ello, en cada una de las 128 realizaciones se contaron los spikes y se generó el histograma que se muestra en la Figura \ref{fig:histogram_Nspikes}.
 
 \begin{figure} [htbp]
     \centering
-    \includegraphics[width=0.45\textwidth]{figures/spikes_count.pdf}
+    \includegraphics[width=0.42\textwidth]{figures/spikes_count.pdf}
     \caption{histograma de la cantidad de spikes en una realización.}
     \label{fig:histogram_Nspikes}
 \end{figure}
 
-Luego, el factor de Fano se puede calcular como \(F = \frac{\sigma^2_N}{\langle N \rangle}\), donde \(\sigma^2_N\) es la varianza y \(\langle N \rangle\) es el valor medio de la cantidad de spikes en una realización. Se obtuvo un valor de \(F = 1.5657\), mientras que \(CV^2 = 0.4319\). Dado que \(F \neq CV^2\), se concluye que el proceso no es de tipo \textit{renewal}.
+% Luego, el factor de Fano se puede calcular como \(F = \frac{\sigma^2_N}{\langle N \rangle}\), donde \(\sigma^2_N\) es la varianza y \(\langle N \rangle\) es el valor medio de la cantidad de spikes en una realización. Se obtuvo un valor de \(F = 1.5657\), mientras que \(CV^2 = 0.4319\). Dado que \(F \neq CV^2\), se concluye que el proceso no es de tipo \textit{renewal}.
+
+Luego, el factor de Fano se calculó como \(F = \frac{\sigma^2_N}{\langle N \rangle}\), obteniendo \(F = 1.5657\) y \(CV^2 = 0.4319\). Dado que \(F \neq CV^2\), el proceso no es de tipo \textit{renewal}.
 
 \subsection*{Ejercicio 3}
 Se estimó la tasa de disparo dependiente del tiempo \(r(t)\) de los datos experimentales promediando en todas las realizaciones utilizando un tamaño de ventana de 100 valores, que se corresponde con \SI{10}{\milli\second}. Es decir, cada realización se las dividió en ventanas de 100 valores, se promedió la cantidad de spikes en cada ventana y de dividió por el tamaño temporal de la ventana para obtener la tasa de disparo. El resultado obtenido se muestra en la Figura \ref{fig:rate}.
+
+% Se estimó la tasa de disparo \(r(t)\) promediando los datos experimentales en ventanas de 100 valores (\SI{10}{\milli\second}). Cada realización, se dividió en ventanas donde se calculó el promedio de spikes y se dividió por el tamaño temporal. El resultado se muestra en la Figura \ref{fig:rate}.
 
 \begin{figure} [htbp]
     \centering
@@ -162,13 +162,10 @@ Se estimó la tasa de disparo dependiente del tiempo \(r(t)\) de los datos exper
 \end{figure}
 
 \subsection*{Ejercicio 4}
-Para calcular la mejor función filtro que da la mejor predicción lineal del histograma dependiente del tiempo \(r(t)\), despreciando el tiempo de autocorrelación del estímulo, se utilizó solo el filtro lienal \(D(\tau)\) suponiendo que el estímulo es ruido blanco. La función filtro se calcula como
+% Para calcular la mejor función filtro que da la mejor predicción lineal del histograma dependiente del tiempo \(r(t)\), despreciando el tiempo de autocorrelación del estímulo, se utilizó solo el filtro lienal \(D(\tau)\) suponiendo que el estímulo es ruido blanco. La función filtro se calcula como \(D(\tau) = \frac{C(\tau)}{\sigma^2_s}\), donde \(\sigma^2_s\) es la varianza del estímulo y \(C(\tau)\) está definido como
 
-\begin{equation}    \nonumber
-    D(\tau) = \frac{C(\tau)}{\sigma^2_s},
-\end{equation}
+Para calcular el mejor filtro lineal para predecir \(r(t)\) despreciando el tiempo de autocorrelación del estímulo, se usó solo el filtro \(D(\tau)\), asumiendo que el estímulo es ruido blanco. El filtro se calcula como \(D(\tau) = \frac{C(\tau)}{\sigma^2_s}\), donde \(\sigma^2_s\) es la varianza del estímulo y \(C(\tau)\) es
 
-\noindent donde \(\sigma^2_s\) es la varianza del estímulo y \(C(\tau)\) está definido como
 
 \begin{equation}    \nonumber
     C(\tau) = \frac{1}{T N_\text{trials}} \sum_\text{spikes} S(t_\text{spike} - \tau),
